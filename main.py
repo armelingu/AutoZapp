@@ -1,38 +1,40 @@
-#!/usr/bin/env python
-# coding: utf-8
+# Antes de tudo: Baixar o python e antes de rodar o código instalar o SELENIUM e o WEBDRIVER_MANAGER via terminal.
+# Quanto maior o tempo de intervalo entre os envios das mensagens, mais dificíl de tomar bloqueio.
+# Lembre-se: WHATSAPP NÃO GOSTA DE AUTOMAÇÕES!!! 
+# Código desenvolvido por @armelingu
 
-# # Foco: Automatizar o envio de mensagens em massa como ferramenta de marketing e venda! 
-
-# ### Code by @ARMELINGU 
-
-# ### Além da automação, conseguimos usar o wa.me/
-
-# ### PRIMEIRA PARTE:
-
-import pandas as pd 
-
-contatos_df = pd.read_excel("Contatos.xlsx")
-display(contatos_df)
-
+# 1
 from selenium import webdriver
-from selenium.webdriver.common.keys import keys 
 import time
-import urllib 
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys 
 
-navegador = webdriver.chrome()
-navegadir.get = ("https://web.whatsapp") 
+# 2
+driver = webdriver.Chrome(ChromeDriverManager().install())
+driver.get('https://web.whatsapp.com/')
+time.sleep(30)
 
-while len(navegadir.finde_Elements_by_id("side")) < 3:
+# 3
+contatos = ['adicionar contatos']
+mensagem = 'Hello, World! Teste automação code by @armelingu'
+
+#4
+def buscar_contato(contato):
+    campo_pesquisa = driver.find_element_by_xpath('//div[contains(@class,"copyable-text selectable-text")]')
+    time.sleep(4)
+    campo_pesquisa.click()
+    campo_pesquisa.send_keys(contato)
+    campo_pesquisa.send_keys(Keys.ENTER) 
+
+def enviar_mensagem(mensagem):
+    campo_mensagem = driver.find_elements_by_xpath('//div[contains(@class,"copyable-text selectable-text")]')
+    campo_mensagem[1].click()
     time.sleep(3)
+    campo_mensagem[1].send_keys(mensagem) 
+    campo_mensagem[1].send_keys(Keys.ENTER)
 
-# SEGUNDA PARTE: 
-for i, mensagem in enumerate(contatos_df['Mensagem']):
-    pessoa = contatos_df.loc[i, "Pessoa"]
-    numero = numero_df.loc[i, "Número"]
-    texto = urllib.parse.quote(f"Oi {pessoa}! {mensagem}")
-    link = f"https://web.whatsapp.com/send?phone={numero}&text={texto}"
-    navegador.get(link)
-    while len(navegador.find_elements_by_id(https://web.whatsapp.com/send?phone={numero}&text={texto}"side")) <1:
-        time.sleep(5)
-    Navegador.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]').send_keys(Keys.ENTER)
-    time.sleep(10))
+for contato in contatos: 
+    buscar_contato(contato)
+    enviar_mensagem(mensagem)
+
+
